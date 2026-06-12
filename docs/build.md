@@ -14,6 +14,7 @@ cd llama.cpp
 The following sections describe how to build with different backends and options.
 
 * [CPU Build](#cpu-build)
+* [NPX Build](#npx-build)
 * [BLAS Build](#blas-build)
 * [Metal Build](#metal-build)
 * [SYCL](#sycl)
@@ -85,6 +86,17 @@ cmake --build build --config Release
   - **Debian / Ubuntu:** `sudo apt-get install libssl-dev`
   - **Fedora / RHEL / Rocky / Alma:** `sudo dnf install openssl-devel`
   - **Arch / Manjaro:** `sudo pacman -S openssl`
+
+## NPX Build
+
+The NPX backend is an experimental integration for the MIPS ARC NPX Neural Processing Unit family in the context of the MIPS ARC NPX line of NPUs. Enable it with the CMake option `-DGGML_NPX=ON`:
+
+```bash
+cmake -B build -DGGML_NPX=ON
+cmake --build build --config Release
+```
+
+This backend is wired up as a GGML backend target, but it still expects the NPX toolkit headers and libraries to be available through the build environment or toolchain. For more detail, see [NPX backend documentation](./backends/npx.md).
 
 ## BLAS Build
 
