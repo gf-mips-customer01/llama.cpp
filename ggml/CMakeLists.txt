@@ -196,6 +196,9 @@ set(GGML_BLAS_VENDOR ${GGML_BLAS_VENDOR_DEFAULT} CACHE STRING
                                             "ggml: BLAS library vendor")
 option(GGML_LLAMAFILE                       "ggml: use LLAMAFILE"                             ${GGML_LLAMAFILE_DEFAULT})
 option(GGML_NPX                             "ggml: use NPX"                                   OFF)
+set(GGML_NPX_TOOLKIT_ROOT                   "" CACHE PATH "ggml: path to the local npx-toolkit source tree")
+set(GGML_NPX_TOOLKIT_DRIVER                 "none" CACHE STRING "ggml: driver mode for npx-toolkit when built as a subproject")
+set_property(CACHE GGML_NPX_TOOLKIT_DRIVER PROPERTY STRINGS "none;accel;npusim")
 
 option(GGML_CUDA                            "ggml: use CUDA"                                  OFF)
 option(GGML_MUSA                            "ggml: use MUSA"                                  OFF)

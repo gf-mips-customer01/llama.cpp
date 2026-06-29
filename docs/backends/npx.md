@@ -7,16 +7,23 @@ It is enabled with the CMake option `-DGGML_NPX=ON`.
 ## Build
 
 ```bash
-cmake -B build -DGGML_NPX=ON
+cmake -B build -DGGML_NPX=ON -DGGML_NPX_TOOLKIT_ROOT=/path/to/npx-toolkit
 cmake --build build --config Release
 ```
 
-This backend is implemented as a GGML backend target in [ggml/src/ggml-npx/CMakeLists.txt](../../ggml/src/ggml-npx/CMakeLists.txt). In the current tree, the NPX toolkit headers and libraries still need to be provided by the toolchain or build environment.
+This backend is implemented as a GGML backend target in [ggml/src/ggml-npx/CMakeLists.txt](../../ggml/src/ggml-npx/CMakeLists.txt). When `GGML_NPX_TOOLKIT_ROOT` is set, the build will add the local npx-toolkit tree as a CMake subproject and link the NPX backend against the toolkit targets that are available.
 
 ## Prerequisites
 
 - Make sure the NPX toolkit or an equivalent vendor SDK is available.
-- Expose the relevant headers and libraries to CMake through the toolchain, `CMAKE_PREFIX_PATH`, or explicit include/link settings.
+- If you are using the local checkout, initialize its submodules first:
+
+  ```bash
+  git -C /path/to/npx-toolkit submodule update --init --recursive
+  ```
+
+- Some npx-toolkit submodules that build the simulation path (for example the `hlmodel` flow) require `SYSTEMC_HOME` to be set before configuring CMake. If you see an error such as `SYSTEMC_HOME is not set`, provide the SystemC installation prefix in the environment before running CMake.
+- Expose the relevant headers and libraries to CMake through the toolchain, `CMAKE_PREFIX_PATH`, or explicit include/link settings when you are not using the local source tree.
 - Expect this integration to be experimental and to require some bring-up work on the target platform.
 
 ## Notes
